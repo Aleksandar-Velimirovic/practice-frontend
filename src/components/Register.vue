@@ -19,6 +19,7 @@
             required
             style="border-radius:2px;font-size:13px;"
           ></b-form-input>
+          <small v-if="errors['email']" style="color:red;">*{{errors['email'][0]}}</small>
         </b-form-group>
 
         <b-form-group id="input-group-3" class="mt-2">
@@ -30,6 +31,7 @@
             required
             style="border-radius:2px;font-size:13px;"
           ></b-form-input>
+          <small v-if="errors['name']" style="color:red;">*{{errors['name'][0]}}</small>
         </b-form-group>
 
         <b-form-group id="input-group-2" class="mt-2">
@@ -41,6 +43,19 @@
             required
             style="border-radius:2px;font-size:13px;"
           ></b-form-input>
+          <small v-if="errors['password']" style="color:red;">*{{errors['password'][0]}}</small>
+        </b-form-group>
+
+        <b-form-group id="input-group-2" class="mt-2">
+          <b-form-input
+            id="input-2"
+            v-model="user.repeat_password"
+            type="password"
+            placeholder="repeat password"
+            required
+            style="border-radius:2px;font-size:13px;"
+          ></b-form-input>
+          <small v-if="errors['repeat_password']" style="color:red;">*{{errors['repeat_password'][0]}}</small>
         </b-form-group>
         <div style="text-align:center">
           <b-button class="login-button" variant="btn btn-primary" @click="register()">Signup</b-button>

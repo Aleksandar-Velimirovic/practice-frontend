@@ -30,10 +30,11 @@ class ProfileService extends HttpService {
     })
   }
 
-  getPopularProfiles(searchTerm) {
+  getPopularProfiles(searchTerm, profileId) {
     return this.axios.get('popular-profiles', {
       params: {
-          search_term: searchTerm
+          search_term: searchTerm,
+          profile_id: profileId
       }
     })
   }

@@ -23,6 +23,7 @@
             required
             style="border-radius:2px;font-size:13px;"
           ></b-form-input>
+          <small v-if="errors['email']" style="color:red;">*{{errors['email'][0]}}</small>
         </b-form-group>
 
         <b-form-group id="input-group-2" class="mt-2">
@@ -34,44 +35,55 @@
             required
             style="border-radius:2px;font-size:13px;"
           ></b-form-input>
+          <small v-if="errors['password']" style="color:red;">*{{errors['password'][0]}}</small>
         </b-form-group>
         <b-button class="login-button"  variant="btn btn-primary" @click="loginUser()">Login</b-button>
       </b-form>
       <div class="line"></div>
-      <p style="margin-top: 30px">Don't have an account? Register <a href="#" style="text-decoration:none" v-b-modal.modal-register>here</a></p>
+      <p style="margin-top: 30px">Don't have an account? Register <a style="text-decoration:none" v-b-modal.modal-register>here</a></p>
     </b-card>
-    {{ $mq }}
     <Register/>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
 import Register from "../components/Register"
+import { authService } from "../services/AuthService"
+import { mapMutations } from 'vuex'
 
 export default {
   data(){
     return{
-      user:{}
+      user:{},
+      errors:[]
     }
   },
   components: {
     Register
   },
-  computed:{
-    ...mapGetters({
-      errors: 'getErrors'
-    })
-  },
+  
   methods:{
-    ...mapActions({
-      login: 'login'
+    ...mapMutations({
+      setToken: 'setToken',
+      setUserProfileId: 'setUserProfileId',
+      setUsername: 'setUsername',
+      setUserId: 'setUserId'
     }),
-    loginUser(){
-      this.login(this.user).then(() => {
-        if(!this.errors){
-          this.$router.push({name: 'Dashboard'})
-        }
+    loginUser() {
+      authService.login(this.user).then(response => {
+        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('userProfileId', response.data.user_profile_id)
+        localStorage.setItem('username', response.data.username)
+        localStorage.setItem('userId', response.data.id)
+
+        this.setToken(response.data.token)
+        this.setUserProfileId(response.data.user_profile_id)
+        this.setUsername(response.data.username)
+        this.setUserId(response.data.id)
+
+        this.$router.push({name: 'Dashboard'})
+      }).catch(error => {
+        this.errors = error.response.data.errors
       })
     }
   }

@@ -27,8 +27,10 @@
         <label v-if="isUserProfile" class="formLabel" @click="$refs.image.click()" for="input-file">
             <div>+</div>
         </label>
-        <button v-if="isFollowing" class="btn btn-outline-primary">Unfollow</button>
-        <button v-if="!isFollowing" class="btn btn-outline-primary" @click="follow()">Follow</button>
+        <div v-if="!isUserProfile">
+            <button v-if="isFollowing" class="btn btn-outline-primary">Unfollow</button>
+            <button v-if="!isFollowing" class="btn btn-outline-primary" @click="follow()">Follow</button>
+        </div>
     </div>
     <Gallery :images="profile.images" :profilePicture="profilePicture" :profile="profile"/>
   </div>

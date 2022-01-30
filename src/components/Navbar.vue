@@ -23,7 +23,7 @@
             <template #button-content>
               <em v-if="username">{{username}}</em>
             </template>
-            <b-dropdown-item href="/profile">Profile</b-dropdown-item>
+            <b-dropdown-item><router-link :to="{name: 'Profile'}" style="text-decoration:none;">Profile</router-link></b-dropdown-item>
             <b-dropdown-item @click="logoutUser()">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>

@@ -44,7 +44,7 @@ export default {
   },
 
   created() {
-    profileService.getPopularProfiles(this.$route.params.search_term).then(response => {
+    profileService.getPopularProfiles(this.$route.params.search_term, localStorage.getItem('userProfileId')).then(response => {
       this.profiles = response.data.profiles
     })
   }
